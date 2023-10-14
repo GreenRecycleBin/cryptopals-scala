@@ -1,6 +1,16 @@
 package io.github.greenrecyclebin.cryptopals
 
 object Hex:
+  def xorToChars(hex: String, b0: Byte): String =
+    val bytes = xorToBytes(hex, b0)
+
+    bytes.map(_.toChar).mkString
+
+  private def xorToBytes(hex: String, b0: Byte): Seq[Byte] =
+    val bs = toBytes(hex)
+
+    bs.map(_ ^ b0).map(_.toByte)
+
   def xor(hex1: String, hex2: String): String =
     val bs1 = toBytes(hex1)
     val bs2 = toBytes(hex2)
