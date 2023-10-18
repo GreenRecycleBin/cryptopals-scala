@@ -49,7 +49,7 @@ object Hex:
 
     out
 
-  private def fromBytes(bs: Seq[Byte]): String =
+  def fromBytes(bs: Seq[Byte]): String =
     val hex = StringBuilder()
 
     for i <- bs.indices
