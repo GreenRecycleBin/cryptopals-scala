@@ -1,11 +1,7 @@
 package io.github.greenrecyclebin.cryptopals
 
-import RepeatingXorCipher.decrypt
-
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
 
 object Set1Challenge7:
   def main(args: Array[String]): Unit =
@@ -20,13 +16,9 @@ object Set1Challenge7:
       )
       .replace("\n", "")
 
-    val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
-
-    val keySpec =
-      SecretKeySpec(key.getBytes(StandardCharsets.ISO_8859_1), "AES")
-
-    cipher.init(Cipher.DECRYPT_MODE, keySpec)
     val bs = java.util.Base64.getDecoder.decode(s)
-    val plaintext = cipher.doFinal(bs)
+
+    val plaintext =
+      Aes.ecbDecrypt(key.getBytes(StandardCharsets.ISO_8859_1), bs)
 
     println(String(plaintext, StandardCharsets.ISO_8859_1))

@@ -1,11 +1,5 @@
 package io.github.greenrecyclebin.cryptopals
 
-import RepeatingXorCipher.decrypt
-
-import java.nio.charset.StandardCharsets
-import java.nio.file.{Files, Paths}
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
 import scala.io.Source
 import scala.util.Using
 
@@ -26,10 +20,4 @@ object Set1Challenge8:
   private def encryptedWithEcb(hex: String) =
     val bs = Hex.toBytes(hex)
 
-    val byteFrequencies = bs.toSeq
-      .grouped(16)
-      .iterator
-      .to(Iterable)
-      .groupMapReduce(identity)(_ => 1)(_ + _)
-
-    byteFrequencies.values.exists(_ > 1)
+    Aes.encryptedWithEcb(bs)
