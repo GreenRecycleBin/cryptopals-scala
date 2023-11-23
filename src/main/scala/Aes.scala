@@ -20,10 +20,10 @@ object Aes:
     ecb(key, bs, Cipher.DECRYPT_MODE)
 
   private def ecb(
-                   key: Array[Byte],
-                   bs: Array[Byte],
-                   mode: Int
-                 ): Array[Byte] =
+      key: Array[Byte],
+      bs: Array[Byte],
+      mode: Int
+  ): Array[Byte] =
     val keySpec = new SecretKeySpec(key, "AES")
 
     mode match
@@ -37,10 +37,10 @@ object Aes:
     AesEcbPkcS5PaddingCipher.doFinal(bs)
 
   def cbcEncrypt(
-                  key: Array[Byte],
-                  iv: Seq[Byte],
-                  bs: Seq[Byte]
-                ): Seq[Byte] =
+      key: Array[Byte],
+      iv: Seq[Byte],
+      bs: Seq[Byte]
+  ): Seq[Byte] =
     val keySpec = new SecretKeySpec(key, "AES")
     AesEcbNoPaddingCipher.init(Cipher.ENCRYPT_MODE, keySpec)
 
@@ -63,10 +63,10 @@ object Aes:
     ArraySeq.from(bsc)
 
   def cbcDecrypt(
-                  key: Array[Byte],
-                  iv: Seq[Byte],
-                  bs: Seq[Byte]
-                ): Seq[Byte] =
+      key: Array[Byte],
+      iv: Seq[Byte],
+      bs: Seq[Byte]
+  ): Seq[Byte] =
     val keySpec = new SecretKeySpec(key, "AES")
     val cipher = Cipher.getInstance("AES/ECB/NoPadding")
     cipher.init(Cipher.DECRYPT_MODE, keySpec)

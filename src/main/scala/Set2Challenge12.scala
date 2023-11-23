@@ -4,19 +4,49 @@ import javax.crypto.Cipher
 import scala.collection.mutable
 import scala.util.Random
 
-object Set2Challenge11:
+object Set2Challenge12:
   private val MinRandomBytesSize = 5
   private type EncryptionOracle = Seq[Byte] => Seq[Byte]
 
   def main(args: Array[String]): Unit =
     (1 to 1000).foreach { _ =>
-      val (expectedMode, oracle) = createAesEncryptionOracle()
-      val actualMode = detectAesEcbOrCbc(oracle)
+      val (expectedMode, oracle) = createEncryptionOracle()
+      val actualMode = detectEcbOrCbc(oracle)
 
       assert(actualMode == expectedMode)
     }
 
-  private def detectAesEcbOrCbc(oracle: EncryptionOracle): Boolean =
+  println(foo(List(-2, -1, 0, 1, 2)) == foo2(List(-2, -1, 0, 1, 2)))
+
+  def foo3(xs: List[Int]) =
+    xs.map: x =>
+        x + 1
+      .filter: x =>
+        x > 0
+
+  def foo4(a: List[Int]) =
+    a.map: x =>
+         x + 1
+       .filter: x =>
+        x > 0
+
+  def foo(xs: List[Int]) =
+    xs.map: x =>
+        x + 1
+      .toSet.filter: x =>
+          x > 0
+       .toList
+
+  def foo2(xs: List[Int]) =
+    xs
+      .map: x =>
+        x + 1
+      .toSet
+      .filter: x =>
+        x > 0
+      .toList
+
+  private def detectEcbOrCbc(oracle: EncryptionOracle): Boolean =
     val cipher = Cipher.getInstance("AES/ECB/NoPadding")
     val blockSize = cipher.getBlockSize
 
@@ -27,7 +57,7 @@ object Set2Challenge11:
 
     Aes.encryptedWithEcb(ciphertext)
 
-  private def createAesEncryptionOracle(): (Boolean, EncryptionOracle) =
+  private def createEncryptionOracle(): (Boolean, EncryptionOracle) =
     val ecb = Random.nextBoolean()
 
     def encryptionOracle(bs: Seq[Byte]): Seq[Byte] =
